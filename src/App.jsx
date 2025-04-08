@@ -10,7 +10,6 @@ import {
   AlignRight,
   Plus,
   Trash,
-  ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
@@ -441,7 +440,7 @@ function App() {
 
                
                 <div className="relative mb-1 cursor-pointer">
-                  <button
+                  <div
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
                     onClick={() => setIsColumnsOpen(!isColumnsOpen)}
                   >
@@ -463,7 +462,7 @@ function App() {
                         <ChevronUp className="h-4 w-4 ml-1 rotate-180" />
                       )}
                     </div>
-                  </button>
+                  </div>
 
                   {isColumnsOpen && (
                     <div className="absolute bg-white w-full p-3 mt-2 shadow-md z-20">
