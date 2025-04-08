@@ -444,7 +444,7 @@ function App() {
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
                     onClick={() => setIsColumnsOpen(!isColumnsOpen)}
                   >
-                    <div className="flex items-center">Columns</div>
+                    <div className="flex items-center text-sm md:text-base">Columns</div>
 
                     <div className="flex items-center">
                       <button
@@ -454,24 +454,24 @@ function App() {
                         }}
                         className="p-1 rounded flex items-center text-xs"
                       >
-                        <Plus className="h-4 w-4 mr-1 text-black font-bold cursor-pointer" />
+                        <Plus className="h-3 md:h-4 w-3 md:w-4 mr-1 text-black font-bold cursor-pointer" />
                       </button>
                       {isColumnsOpen ? (
-                        <ChevronUp className="h-4 w-4 ml-1" />
+                        <ChevronUp className="h-3 md:h-4 w-3 md:w-4 ml-1" />
                       ) : (
-                        <ChevronUp className="h-4 w-4 ml-1 rotate-180" />
+                        <ChevronUp className="h-3 md:h-4 w-3 md:w-4 ml-1 rotate-180" />
                       )}
                     </div>
                   </div>
 
                   {isColumnsOpen && (
-                    <div className="absolute bg-white w-full p-3 mt-2 shadow-md z-20">
+                    <div className="absolute bg-white w-full p-2 md:p-3 mt-2 shadow-md z-20">
                       {columnSettings.map((column) => (
                         <div
                           key={column.id}
-                          className="border-b border-gray-200 pb-2 mb-2 flex flex-row gap-1"
+                          className="border-b border-gray-200 pb-2 mb-2 flex flex-col sm:flex-row gap-1"
                         >
-                          <div className="flex justify-between items-center mb-2">
+                          <div className="flex justify-between items-center mb-2 w-full sm:w-1/2">
                             <input
                               type="text"
                               value={column.name}
@@ -488,7 +488,7 @@ function App() {
                             />
                           </div>
 
-                          <div className="flex justify-between items-center">
+                          <div className="flex justify-between items-center w-full sm:w-1/2">
                             <div className="flex space-x-1 bg-white shadow-md p-1 rounded">
                               <button
                                 onClick={() => updateColumnAlign(column.id, "left")}
@@ -528,13 +528,9 @@ function App() {
 
                             <button
                               onClick={(e) => {
-                               
                                 e.stopPropagation();
-                                
-                               
                                 if (columnSettings.length > 1) {
                                   try {
-                                   
                                     const newColumns = [...columnSettings].filter(
                                       (col) => col.id !== column.id
                                     );
@@ -596,30 +592,30 @@ function App() {
                 <div className="bg-white shadow-md max-w-4xl mx-auto">
                   <div className="flex flex-col">
                     <div className="p-25">
-                      <div className="flex flex-col md:flex-row justify-between mb-8 ">
-                        <div>
+                      <div className="flex flex-col md:flex-row justify-between mb-4 md:mb-8">
+                        <div className="mb-4 md:mb-0">
                           <div className="text-black mb-2 font-bold text-md">
                             Invoice To
                           </div>
-                          <div className="font-bold text-lg">
+                          <div className="font-bold text-base md:text-lg">
                             {invoiceData.clientName}
                           </div>
-                          <div className="text-sm text-gray-600">
+                          <div className="text-xs md:text-sm text-gray-600">
                             {invoiceData.clientAddress}
                           </div>
-                          <div className="text-sm text-gray-600 ">
+                          <div className="text-xs md:text-sm text-gray-600">
                             P: {invoiceData.clientPhone}
                           </div>
-                          <div className="text-sm text-gray-600 ">
+                          <div className="text-xs md:text-sm text-gray-600">
                             E: {invoiceData.clientEmail}
                           </div>
                         </div>
                         <div className="mt-4 md:mt-0">
                           <div className="flex justify-between mb-2 border-b-4 border-blue-400 pb-2">
-                            <div className="text-gray-600 mr-4 ">
+                            <div className="text-gray-600 mr-2 md:mr-4 text-xs md:text-sm">
                               Total Due:
                             </div>
-                            <div className="font-bold">
+                            <div className="font-bold text-xs md:text-sm">
                               {formatCurrency(invoiceData.grandTotal)}
                             </div>
                           </div>
