@@ -14,9 +14,8 @@ import {
 } from "lucide-react";
 
 function App() {
-  
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  
+
   const [tablePosition, setTablePosition] = useState({ x: 0, y: 0 });
   const [tableSize, setTableSize] = useState({ width: 100, height: "auto" });
 
@@ -96,7 +95,6 @@ function App() {
       if (item.id === id) {
         const updatedItem = { ...item, [field]: value };
 
-     
         if (field === "unitPrice" || field === "qty") {
           updatedItem.total = updatedItem.unitPrice * updatedItem.qty;
         }
@@ -152,8 +150,6 @@ function App() {
     );
   };
 
-  
-
   const addColumn = () => {
     const newId = columnSettings.length + 1;
     setColumnSettings([
@@ -182,9 +178,6 @@ function App() {
     return `$${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
   };
 
- 
-  
-
   return (
     <>
       <div className="bg-gray-100 overflow-hidden">
@@ -194,39 +187,64 @@ function App() {
             <button className="text-blue p-1 md:p-2 rounded-md hover:bg-gray-100">
               <ArrowLeft className="h-4 md:h-5 w-4 md:w-5" />
             </button>
-            <span className="ml-2 font-medium text-sm md:text-base truncate">{invoiceData.invoiceName}</span>
+            <span className="ml-2 font-medium text-sm md:text-base truncate">
+              {invoiceData.invoiceName}
+            </span>
           </div>
           <div className="flex items-center space-x-1 md:space-x-2 w-full md:w-auto justify-end">
-            <div className="mx-2 md:mx-5 flex items-center justify-between p-2 md:p-3 h-8 md:h-10 w-16 md:w-20 border border-gray-400 rounded-md">
+            <div className="mx-2 md:mx-5 flex items-center justify-between p-2 md:p-3 h-6 md:h-10 w-16 md:w-20 border border-gray-400 rounded-md">
               <Undo2 className="text-xl h-4 md:h-5 w-4 md:w-5 text-gray-600 cursor-pointer" />
               <Undo2 className="text-gray-400 h-4 md:h-5 w-4 md:w-5 rotate-y-180 cursor-pointer" />
             </div>
 
-            <button className="text-black border flex items-center p-1 md:p-2 rounded-md hover:bg-gray-300 transition duration-200 text-xs md:text-sm">
+            <button className="text-black border flex items-center p-1 md:p-2 rounded-md hover:bg-gray-300 transition duration-200 text-xs md:text-sm h-6 md:h-10">
               <Eye className="h-3 md:h-4 w-3 md:w-4 mr-1" />
               Preview
             </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-2 md:px-4 py-1 md:py-2 rounded-md text-xs md:text-sm">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white p-1 md:p-2   rounded-md text-xs md:text-sm h-6 md:h-10">
               Publish
             </button>
           </div>
         </div>
 
-        
         <div className="flex flex-col md:flex-row w-full overflow-x-hidden">
-          <div className={`${sidebarCollapsed ? 'w-full md:w-12' : 'w-full md:w-70'} transition-all duration-300 bg-white shadow-md rounded-md overflow-hidden`}>
+          {!sidebarCollapsed && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+              onClick={() => setSidebarCollapsed(true)}
+            ></div>
+          )}
+
+          <div
+            className={`
+  ${sidebarCollapsed ? "w-12" : "fixed md:relative w-3/4 md:w-70"} 
+  transition-all duration-300 bg-white shadow-md rounded-md 
+  ${
+    sidebarCollapsed
+      ? "overflow-visible"
+      : "overflow-y-auto overflow-x-hidden h-screen md:h-auto z-50 left-0 top-0"
+  }
+`}
+          >
             <div className="flex border-b border-gray-300 p-2 font-bold">
-              <button 
-                onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
+              <button
+                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
                 className="text-gray-500 hover:bg-gray-100 rounded p-1"
               >
-                {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <X className="h-5 w-5 md:hidden" />}
+                {sidebarCollapsed ? (
+                  <ChevronRight className="h-5 w-5" />
+                ) : (
+                  <X className="h-5 w-5" />
+                )}
               </button>
               {!sidebarCollapsed && (
                 <>
                   <p className="text-gray-500 ml-1 hidden md:inline">Manage:</p>
                   <p className="font-bold text-bold pl-2">Invoice Table</p>
-                  <X className="h-5 w-5 ml-auto cursor-pointer hidden md:block" onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+                  {/* <X
+                    className="h-5 w-5 ml-auto cursor-pointer hidden md:block"
+                    onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  /> */}
                 </>
               )}
             </div>
@@ -243,7 +261,9 @@ function App() {
                         key={axis}
                         className="border h-8 flex items-center justify-between px-2 w-20 md:w-20 rounded-md"
                       >
-                        <span className="font-medium">{axis.toUpperCase()}</span>
+                        <span className="font-medium">
+                          {axis.toUpperCase()}
+                        </span>
                         <input
                           type="number"
                           value={tablePosition[axis]}
@@ -272,10 +292,16 @@ function App() {
                         </span>
                         <input
                           type="text"
-                          value={dimension === "width" 
-                            ? tableSize.width 
-                            : tableSize.height === "auto" ? "" : tableSize.height}
-                          onChange={(e) => handleSizeChange(dimension, e.target.value)}
+                          value={
+                            dimension === "width"
+                              ? tableSize.width
+                              : tableSize.height === "auto"
+                              ? ""
+                              : tableSize.height
+                          }
+                          onChange={(e) =>
+                            handleSizeChange(dimension, e.target.value)
+                          }
                           className="w-full focus:outline-none text-center"
                           placeholder={dimension === "height" ? "auto" : ""}
                         />
@@ -287,9 +313,8 @@ function App() {
             )}
 
             {sidebarCollapsed ? (
-              
-              <>
-                <button 
+              <div className="">
+                {/* <button
                   onClick={() => {
                     setSidebarCollapsed(false);
                     setIsDropdownOpen(!isDropdownOpen);
@@ -297,11 +322,15 @@ function App() {
                   className="w-full flex justify-center p-2 hover:bg-gray-100"
                 >
                   <div className="p-1">
-                    <ChevronUp className={`h-4 w-4 ${isDropdownOpen ? '' : 'rotate-180'}`} />
+                    <ChevronUp
+                      className={`h-4 w-4 ${
+                        isDropdownOpen ? "" : "rotate-180"
+                      }`}
+                    />
                   </div>
-                </button>
-                
-                <button 
+                </button> */}
+
+                {/* <button
                   onClick={() => {
                     setSidebarCollapsed(false);
                     setIsColumnsOpen(!isColumnsOpen);
@@ -311,9 +340,9 @@ function App() {
                   <div className="border p-1 rounded">
                     <Plus className="h-4 w-4" />
                   </div>
-                </button>
-                
-                <button 
+                </button> */}
+
+                {/* <button
                   onClick={() => {
                     setSidebarCollapsed(false);
                     setIsRowsOpen(!isRowsOpen);
@@ -323,9 +352,9 @@ function App() {
                   <div className="p-1">
                     <AlignLeft className="h-4 w-4 rotate-90" />
                   </div>
-                </button>
-                
-                <button 
+                </button> */}
+
+                {/* <button
                   onClick={() => {
                     setSidebarCollapsed(false);
                     setIsTableStylesOpen(!isTableStylesOpen);
@@ -335,10 +364,9 @@ function App() {
                   <div className="p-1">
                     <div className="h-4 w-4 border border-gray-400 bg-gray-100"></div>
                   </div>
-                </button>
-              </>
+                </button> */}
+              </div>
             ) : (
-             
               <>
                 <div className="relative">
                   <button
@@ -354,7 +382,7 @@ function App() {
                   </button>
 
                   {isDropdownOpen && (
-                    <div className="absolute bg-white w-full p-3 mt-2 z-10">
+                    <div className=" bg-white w-full p-3 mt-2 z-10">
                       <div className="flex flex-row justify-between p-2 border-b border-gray-300">
                         <p>Header Visibility</p>
                         <div
@@ -438,28 +466,29 @@ function App() {
                   )}
                 </div>
 
-               
-                <div className="relative mb-1 cursor-pointer">
+                <div className=" mb-1 cursor-pointer">
                   <div
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
                     onClick={() => setIsColumnsOpen(!isColumnsOpen)}
                   >
-                    <div className="flex items-center text-sm md:text-base">Columns</div>
+                    <div className="flex items-center  md:text-base">
+                      Columns
+                    </div>
 
                     <div className="flex items-center">
                       <button
                         onClick={(e) => {
-                          e.stopPropagation(); 
+                          e.stopPropagation();
                           addColumn();
                         }}
                         className="p-1 rounded flex items-center text-xs"
                       >
-                        <Plus className="h-3 md:h-4 w-3 md:w-4 mr-1 text-black font-bold cursor-pointer" />
+                        <Plus className="h-4 w-4 mr-1 text-black font-bold cursor-pointer" />
                       </button>
                       {isColumnsOpen ? (
-                        <ChevronUp className="h-3 md:h-4 w-3 md:w-4 ml-1" />
+                        <ChevronUp className="h-4  w-4 ml-1" />
                       ) : (
-                        <ChevronUp className="h-3 md:h-4 w-3 md:w-4 ml-1 rotate-180" />
+                        <ChevronUp className="h-4  w-4 ml-1 rotate-180" />
                       )}
                     </div>
                   </div>
@@ -491,7 +520,9 @@ function App() {
                           <div className="flex justify-between items-center w-full sm:w-1/2">
                             <div className="flex space-x-1 bg-white shadow-md p-1 rounded">
                               <button
-                                onClick={() => updateColumnAlign(column.id, "left")}
+                                onClick={() =>
+                                  updateColumnAlign(column.id, "left")
+                                }
                                 className={`p-1 rounded ${
                                   column.align === "left"
                                     ? "text-black"
@@ -531,12 +562,15 @@ function App() {
                                 e.stopPropagation();
                                 if (columnSettings.length > 1) {
                                   try {
-                                    const newColumns = [...columnSettings].filter(
-                                      (col) => col.id !== column.id
-                                    );
+                                    const newColumns = [
+                                      ...columnSettings,
+                                    ].filter((col) => col.id !== column.id);
                                     setColumnSettings(newColumns);
                                   } catch (error) {
-                                    console.error("Error deleting column:", error);
+                                    console.error(
+                                      "Error deleting column:",
+                                      error
+                                    );
                                     alert("Error deleting column");
                                   }
                                 } else {
@@ -568,7 +602,6 @@ function App() {
                   </button>
                 </div>
 
-             
                 <div className="relative mb-1">
                   <button
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
@@ -586,7 +619,11 @@ function App() {
             )}
           </div>
 
-          <div className="flex flex-col min-h-screen">
+          <div
+            className={`flex flex-col min-h-screen flex-1 overflow-hidden ${
+              !sidebarCollapsed ? "md:ml-0" : ""
+            }`}
+          >
             <div className="flex flex-col md:flex-row flex-1">
               <div className="flex-1 p-4 overflow-auto">
                 <div className="bg-white shadow-md max-w-4xl mx-auto">
@@ -655,7 +692,7 @@ function App() {
                               : `${tableSize.height}px`,
                         }}
                       >
-                        <table className="w-full text-sm md:text-base">
+                        <table className="w-full text-sm md:text-base ">
                           {headerVisible && (
                             <thead>
                               <tr style={{ backgroundColor: backgroundColor }}>
@@ -687,79 +724,110 @@ function App() {
                                     : {}
                                 }
                               >
-                                
-                                {columnSettings[0] && columnSettings[0].visible && (
-                                  <td
-                                    className={`p-${tableStyles.padding}`}
-                                    style={{
-                                      textAlign: columnSettings[0].align,
-                                    }}
-                                  >
-                                    <input
-                                      type="text"
-                                      value={item.name}
-                                      onChange={(e) => updateItem(item.id, "name", e.target.value)}
-                                      className="font-medium mb-1 w-full border-none focus:outline-none"
-                                      style={{ textAlign: columnSettings[0].align }}
-                                    />
-                                    <input
-                                      type="text"
-                                      value={item.description}
-                                      onChange={(e) => updateItem(item.id, "description", e.target.value)}
-                                      className="text-sm text-gray-600 w-full border-none focus:outline-none"
-                                      style={{ textAlign: columnSettings[0].align }}
-                                    />
-                                  </td>
-                                )}
+                                {columnSettings[0] &&
+                                  columnSettings[0].visible && (
+                                    <td
+                                      className={`p-${tableStyles.padding}`}
+                                      style={{
+                                        textAlign: columnSettings[0].align,
+                                      }}
+                                    >
+                                      <input
+                                        type="text"
+                                        value={item.name}
+                                        onChange={(e) =>
+                                          updateItem(
+                                            item.id,
+                                            "name",
+                                            e.target.value
+                                          )
+                                        }
+                                        className="font-medium mb-1 w-full border-none focus:outline-none"
+                                        style={{
+                                          textAlign: columnSettings[0].align,
+                                        }}
+                                      />
+                                      <input
+                                        type="text"
+                                        value={item.description}
+                                        onChange={(e) =>
+                                          updateItem(
+                                            item.id,
+                                            "description",
+                                            e.target.value
+                                          )
+                                        }
+                                        className="text-sm text-gray-600 w-full border-none focus:outline-none"
+                                        style={{
+                                          textAlign: columnSettings[0].align,
+                                        }}
+                                      />
+                                    </td>
+                                  )}
 
-                                
-                                {columnSettings[1] && columnSettings[1].visible && (
-                                  <td
-                                    className={`p-${tableStyles.padding}`}
-                                    style={{ textAlign: columnSettings[1].align }}
-                                  >
-                                    <input
-                                      type="number"
-                                      value={item.unitPrice}
-                                      onChange={(e) => updateItem(item.id, "unitPrice", parseFloat(e.target.value) || 0)}
-                                      className="w-full border-none focus:outline-none"
-                                      style={{ textAlign: columnSettings[1].align }}
-                                    />
-                                  </td>
-                                )}
+                                {columnSettings[1] &&
+                                  columnSettings[1].visible && (
+                                    <td
+                                      className={`p-${tableStyles.padding}`}
+                                      style={{
+                                        textAlign: columnSettings[1].align,
+                                      }}
+                                    >
+                                      <input
+                                        type="number"
+                                        value={item.unitPrice}
+                                        onChange={(e) =>
+                                          updateItem(
+                                            item.id,
+                                            "unitPrice",
+                                            parseFloat(e.target.value) || 0
+                                          )
+                                        }
+                                        className="w-full border-none focus:outline-none"
+                                        style={{
+                                          textAlign: columnSettings[1].align,
+                                        }}
+                                      />
+                                    </td>
+                                  )}
 
-                               
-                                {columnSettings[2] && columnSettings[2].visible && (
-                                  <td
-                                    className={`p-${tableStyles.padding}`}
-                                    style={{ textAlign: columnSettings[2].align }}
-                                  >
-                                    <input
-                                      type="number"
-                                      value={item.qty}
-                                      onChange={(e) =>
-                                        updateItem(
-                                          item.id,
-                                          "qty",
-                                          parseInt(e.target.value) || 0
-                                        )
-                                      }
-                                      className="w-20 border-none focus:outline-none"
+                                {columnSettings[2] &&
+                                  columnSettings[2].visible && (
+                                    <td
+                                      className={`p-${tableStyles.padding}`}
                                       style={{
                                         textAlign: columnSettings[2].align,
                                       }}
-                                    />
-                                  </td>
-                                )}
+                                    >
+                                      <input
+                                        type="number"
+                                        value={item.qty}
+                                        onChange={(e) =>
+                                          updateItem(
+                                            item.id,
+                                            "qty",
+                                            parseInt(e.target.value) || 0
+                                          )
+                                        }
+                                        className="w-20 border-none focus:outline-none"
+                                        style={{
+                                          textAlign: columnSettings[2].align,
+                                        }}
+                                      />
+                                    </td>
+                                  )}
 
-                                {columnSettings[3] && columnSettings[3].visible && (
-                                  <td
-                                    className={`p-${tableStyles.padding} font-medium`}
-                                    style={{ textAlign: columnSettings[3].align }}
-                                  >
-                                    {formatCurrency(item.total)}
-                                  </td>
-                                )}
+                                {columnSettings[3] &&
+                                  columnSettings[3].visible && (
+                                    <td
+                                      className={`p-${tableStyles.padding} font-medium`}
+                                      style={{
+                                        textAlign: columnSettings[3].align,
+                                      }}
+                                    >
+                                      {formatCurrency(item.total)}
+                                    </td>
+                                  )}
                               </tr>
                             ))}
                           </tbody>
@@ -768,7 +836,9 @@ function App() {
 
                       <div className="flex flex-col md:flex-row mb-4 md:mb-8">
                         <div className="flex-1 mb-4 md:mb-0">
-                          <div className="font-medium mb-2 text-sm md:text-base">Payment Info</div>
+                          <div className="font-medium mb-2 text-sm md:text-base">
+                            Payment Info
+                          </div>
                           <div className="mb-1 text-xs md:text-sm">
                             <span className="text-gray-600 inline-block w-20 md:w-28">
                               Account #:
@@ -819,8 +889,6 @@ function App() {
                           </div>
                         </div>
                       </div>
-
-                     
                     </div>
                     <div className="px-4 md:px-25 py-6 md:py-10 bg-gray-200">
                       <div className="mb-4 md:mb-6">
@@ -834,7 +902,9 @@ function App() {
                           Terms & Condition
                         </div>
                         <div>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat magnam impedit nam suscipit repudiandae.
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repellat magnam impedit nam suscipit
+                          repudiandae.
                         </div>
                       </div>
                     </div>
