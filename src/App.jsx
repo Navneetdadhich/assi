@@ -213,35 +213,35 @@ function App() {
         </div>
 
         
-        <div className="flex flex-row gap-50 w-screen">
-          <div className={`${sidebarCollapsed ? 'w-12' : 'w-70'} transition-all duration-300 bg-white shadow-md rounded-md overflow-hidden`}>
+        <div className="flex flex-col md:flex-row w-full overflow-x-hidden">
+          <div className={`${sidebarCollapsed ? 'w-full md:w-12' : 'w-full md:w-70'} transition-all duration-300 bg-white shadow-md rounded-md overflow-hidden`}>
             <div className="flex border-b border-gray-300 p-2 font-bold">
               <button 
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
                 className="text-gray-500 hover:bg-gray-100 rounded p-1"
               >
-                {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : ""}
+                {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <X className="h-5 w-5 md:hidden" />}
               </button>
               {!sidebarCollapsed && (
                 <>
-                  <p className="text-gray-500 ml-1">Manage:</p>
+                  <p className="text-gray-500 ml-1 hidden md:inline">Manage:</p>
                   <p className="font-bold text-bold pl-2">Invoice Table</p>
-                  <X  className="h-5 w-5 ml-auto cursor-pointer"  onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
+                  <X className="h-5 w-5 ml-auto cursor-pointer hidden md:block" onClick={() => setSidebarCollapsed(!sidebarCollapsed)} />
                 </>
               )}
             </div>
 
             {!sidebarCollapsed && (
               <div className="my-5">
-                <div className="flex flex-row gap-5 items-center justify-center p-2">
-                  <div className="w-20">
+                <div className="flex md:flex-row gap-2 md:gap-5 items-start md:items-center justify-center p-2">
+                  <div className="w-full md:w-20">
                     <p className="font-medium">Position</p>
                   </div>
-                  <div className="w-60 flex gap-2">
+                  <div className="w-full md:w-60 flex gap-2">
                     {["x", "y"].map((axis) => (
                       <div
                         key={axis}
-                        className="border h-8 flex items-center justify-between px-2 w-20 rounded-md"
+                        className="border h-8 flex items-center justify-between px-2 w-20 md:w-20 rounded-md"
                       >
                         <span className="font-medium">{axis.toUpperCase()}</span>
                         <input
@@ -257,8 +257,8 @@ function App() {
                   </div>
                 </div>
 
-                <div className="flex flex-row gap-5 items-center justify-center p-2">
-                  <div className="w-20">
+                <div className="flex md:flex-row gap-5 items-start md:items-center justify-center p-2">
+                  <div className="w-full md:w-20">
                     <p className="font-medium">Size</p>
                   </div>
                   <div className="w-60 flex gap-2">
@@ -415,7 +415,7 @@ function App() {
                             type="color"
                             value={fontColor}
                             onChange={(e) => setFontColor(e.target.value)}
-                            className="cursor-pointer "
+                            className="cursor-pointer"
                           />
                         </div>
                       </div>
@@ -588,10 +588,10 @@ function App() {
 
           <div className="flex flex-col min-h-screen">
             <div className="flex flex-col md:flex-row flex-1">
-              <div className="flex-1  p-4 overflow-auto">
+              <div className="flex-1 p-4 overflow-auto">
                 <div className="bg-white shadow-md max-w-4xl mx-auto">
                   <div className="flex flex-col">
-                    <div className="p-25">
+                    <div className="md:p-25 p-2">
                       <div className="flex flex-col md:flex-row justify-between mb-4 md:mb-8">
                         <div className="mb-4 md:mb-0">
                           <div className="text-black mb-2 font-bold text-md">
