@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 function App() {
-  // Add sidebar collapsed state
+  
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
   const [tablePosition, setTablePosition] = useState({ x: 0, y: 0 });
@@ -26,11 +26,11 @@ function App() {
     companyName: "RMTECH",
     companyAddress: "2118 Thompson Cir, Syracuse, Connecticut 35624",
     clientName: "SMART TECH LTD",
-    clientAddress: "1901 Thompson Cir, Jibish, Hawaii 81803",
-    clientPhone: "+887 2345 9843",
-    clientEmail: "sales@smarttech.com",
+    clientAddress: "1901 Thompson Cir, Jibish, Hawaii 81063",
+    clientPhone: "+857 2148 9643",
+    clientEmail: "sales@smarttle.com",
     invoiceNo: "5478459",
-    accountNo: "64759874923",
+    accountNo: "641755875923",
     invoiceDate: "25 March, 2019",
     items: [
       {
@@ -97,7 +97,7 @@ function App() {
       if (item.id === id) {
         const updatedItem = { ...item, [field]: value };
 
-        // Recalculate total if unit price or qty changes
+     
         if (field === "unitPrice" || field === "qty") {
           updatedItem.total = updatedItem.unitPrice * updatedItem.qty;
         }
@@ -132,10 +132,10 @@ function App() {
   const [isTableStylesOpen, setIsTableStylesOpen] = useState(false);
 
   const [columnSettings, setColumnSettings] = useState([
-    { id: 1, name: "ITEM DETAILS", align: "left", visible: true },
-    { id: 2, name: "UNIT PRICE", align: "left", visible: true },
-    { id: 3, name: "QTY", align: "left", visible: true },
-    { id: 4, name: "TOTAL", align: "left", visible: true },
+    { id: 1, name: "Item Details", align: "left", visible: true },
+    { id: 2, name: "Unit Price", align: "left", visible: true },
+    { id: 3, name: "Qty", align: "left", visible: true },
+    { id: 4, name: "Total", align: "left", visible: true },
   ]);
 
   const [tableStyles, setTableStyles] = useState({
@@ -213,7 +213,7 @@ function App() {
           </div>
         </div>
 
-        {/* side windows with collapse/expand functionality */}
+        
         <div className="flex flex-row gap-50 w-screen">
           <div className={`${sidebarCollapsed ? 'w-12' : 'w-70'} transition-all duration-300 bg-white shadow-md rounded-md overflow-hidden`}>
             <div className="flex border-b border-gray-300 p-2 font-bold">
@@ -288,7 +288,7 @@ function App() {
             )}
 
             {sidebarCollapsed ? (
-              // Collapsed sidebar view - show icons only
+              
               <>
                 <button 
                   onClick={() => {
@@ -339,7 +339,7 @@ function App() {
                 </button>
               </>
             ) : (
-              // Expanded view - show full controls
+             
               <>
                 <div className="relative">
                   <button
@@ -439,7 +439,7 @@ function App() {
                   )}
                 </div>
 
-                {/* Columns dropdown */}
+               
                 <div className="relative mb-1 cursor-pointer">
                   <button
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
@@ -450,7 +450,7 @@ function App() {
                     <div className="flex items-center">
                       <button
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevent toggle of dropdown
+                          e.stopPropagation(); 
                           addColumn();
                         }}
                         className="p-1 rounded flex items-center text-xs"
@@ -529,13 +529,13 @@ function App() {
 
                             <button
                               onClick={(e) => {
-                                // Stop propagation to prevent dropdown closing
+                               
                                 e.stopPropagation();
                                 
-                                // Check if we can delete
+                               
                                 if (columnSettings.length > 1) {
                                   try {
-                                    // Create a safe copy of the settings before modifying
+                                   
                                     const newColumns = [...columnSettings].filter(
                                       (col) => col.id !== column.id
                                     );
@@ -573,7 +573,7 @@ function App() {
                   </button>
                 </div>
 
-                {/* Table Styles dropdown */}
+             
                 <div className="relative mb-1">
                   <button
                     className="w-full border-b border-gray-300 flex justify-between p-2 rounded-md cursor-pointer font-bold"
@@ -692,7 +692,7 @@ function App() {
                                     : {}
                                 }
                               >
-                                {/* Replace direct index access with safe access */}
+                                
                                 {columnSettings[0] && columnSettings[0].visible && (
                                   <td
                                     className={`p-${tableStyles.padding}`}
@@ -717,7 +717,7 @@ function App() {
                                   </td>
                                 )}
 
-                                {/* Add safety checks for remaining columns too */}
+                                
                                 {columnSettings[1] && columnSettings[1].visible && (
                                   <td
                                     className={`p-${tableStyles.padding}`}
@@ -733,7 +733,7 @@ function App() {
                                   </td>
                                 )}
 
-                                {/* And the rest... */}
+                               
                                 {columnSettings[2] && columnSettings[2].visible && (
                                   <td
                                     className={`p-${tableStyles.padding}`}
@@ -825,7 +825,7 @@ function App() {
                         </div>
                       </div>
 
-                      {/* Thank You Note */}
+                     
                     </div>
                     <div className="px-25 py-10 bg-gray-200">
                       <div className="mb-6">
@@ -834,14 +834,13 @@ function App() {
                         </div>
                       </div>
 
-                      {/* Terms and Conditions */}
+                      
                       <div className=" text-gray-600">
                         <div className="font-bold mb-1 text-lg">
                           Terms & Condition
                         </div>
                         <div>
-                          Neque porro quisquam est qui dolorem ipsum quia dolor
-                          sit amet, consectetur, adipisci velit.
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat magnam impedit nam suscipit repudiandae.
                         </div>
                       </div>
                     </div>
