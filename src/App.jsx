@@ -645,7 +645,7 @@ function App() {
                       </div>
 
                       <div
-                        className={`mb-8 overflow-hidden ${
+                        className={`mb-8 overflow-x-auto ${
                           hasBorder ? "border border-gray-300 rounded-md" : ""
                         }`}
                         style={{
@@ -659,7 +659,7 @@ function App() {
                               : `${tableSize.height}px`,
                         }}
                       >
-                        <table className="w-full">
+                        <table className="w-full text-sm md:text-base">
                           {headerVisible && (
                             <thead>
                               <tr style={{ backgroundColor: backgroundColor }}>
@@ -770,11 +770,11 @@ function App() {
                         </table>
                       </div>
 
-                      <div className="flex flex-col md:flex-row mb-8">
+                      <div className="flex flex-col md:flex-row mb-4 md:mb-8">
                         <div className="flex-1 mb-4 md:mb-0">
-                          <div className="font-medium mb-2">Payment Info</div>
-                          <div className="mb-1">
-                            <span className="text-gray-600 inline-block w-28">
+                          <div className="font-medium mb-2 text-sm md:text-base">Payment Info</div>
+                          <div className="mb-1 text-xs md:text-sm">
+                            <span className="text-gray-600 inline-block w-20 md:w-28">
                               Account #:
                             </span>
                             <span className="font-bold">
@@ -826,16 +826,15 @@ function App() {
 
                      
                     </div>
-                    <div className="px-25 py-10 bg-gray-200">
-                      <div className="mb-6">
-                        <div className="font-bold text-2xl ">
+                    <div className="px-4 md:px-25 py-6 md:py-10 bg-gray-200">
+                      <div className="mb-4 md:mb-6">
+                        <div className="font-bold text-xl md:text-2xl">
                           Thank you for your business!
                         </div>
                       </div>
 
-                      
-                      <div className=" text-gray-600">
-                        <div className="font-bold mb-1 text-lg">
+                      <div className="text-gray-600 text-sm md:text-base">
+                        <div className="font-bold mb-1 text-base md:text-lg">
                           Terms & Condition
                         </div>
                         <div>
