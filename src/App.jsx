@@ -620,15 +620,15 @@ function App() {
           </div>
 
           <div
-            className={`flex flex-col min-h-screen flex-1 overflow-hidden ${
+            className={`flex flex-col min-h-screen flex-1 overflow-scroll ${
               !sidebarCollapsed ? "md:ml-0" : ""
             }`}
           >
             <div className="flex flex-col md:flex-row flex-1">
-              <div className="flex-1 p-4 overflow-auto">
-                <div className="bg-white shadow-md max-w-4xl mx-auto">
-                  <div className="flex flex-col">
-                    <div className="md:p-25 p-2">
+              <div className="flex-1 p-4 overflow-hidden">
+                <div className="bg-white shadow-md max-w-4xl mx-auto overflow-hidden">
+                  <div className="flex flex-col overflow-hidden">
+                    <div className="md:p-25 p-2 overflow-hidden">
                       <div className="flex flex-col md:flex-row justify-between mb-4 md:mb-8">
                         <div className="mb-4 md:mb-0">
                           <div className="text-black mb-2 font-bold text-md">
@@ -677,161 +677,174 @@ function App() {
                         </div>
                       </div>
 
-                      <div
-                        className={`mb-8 overflow-x-auto ${
-                          hasBorder ? "border border-gray-300 rounded-md" : ""
-                        }`}
-                        style={{
-                          position: "relative",
-                          left: `${tablePosition.x}px`,
-                          top: `${tablePosition.y}px`,
-                          width: `${tableSize.width}%`,
-                          height:
-                            tableSize.height === "auto"
-                              ? "auto"
-                              : `${tableSize.height}px`,
-                        }}
-                      >
-                        <table className="w-full text-sm md:text-base ">
-                          {headerVisible && (
-                            <thead>
-                              <tr style={{ backgroundColor: backgroundColor }}>
-                                {columnSettings
-                                  .filter((col) => col.visible)
-                                  .map((column) => (
-                                    <th
-                                      key={column.id}
-                                      className={`p-3 ${fontbold}`}
-                                      style={{
-                                        color: fontColor,
-                                        textAlign: column.align,
-                                      }}
-                                    >
-                                      {column.name}
-                                    </th>
-                                  ))}
-                              </tr>
-                            </thead>
-                          )}
-                          <tbody>
-                            {invoiceData.items.map((item) => (
-                              <tr
-                                key={item.id}
-                                className={hasBorder ? "border-t" : ""}
-                                style={
-                                  item.id % 2 === 0 && tableStyles.zebra
-                                    ? { backgroundColor: tableStyles.rowColor }
-                                    : {}
-                                }
-                              >
-                                {columnSettings[0] &&
-                                  columnSettings[0].visible && (
-                                    <td
-                                      className={`p-${tableStyles.padding}`}
-                                      style={{
-                                        textAlign: columnSettings[0].align,
-                                      }}
-                                    >
-                                      <input
-                                        type="text"
-                                        value={item.name}
-                                        onChange={(e) =>
-                                          updateItem(
-                                            item.id,
-                                            "name",
-                                            e.target.value
-                                          )
-                                        }
-                                        className="font-medium mb-1 w-full border-none focus:outline-none"
-                                        style={{
-                                          textAlign: columnSettings[0].align,
-                                        }}
-                                      />
-                                      <input
-                                        type="text"
-                                        value={item.description}
-                                        onChange={(e) =>
-                                          updateItem(
-                                            item.id,
-                                            "description",
-                                            e.target.value
-                                          )
-                                        }
-                                        className="text-sm text-gray-600 w-full border-none focus:outline-none"
-                                        style={{
-                                          textAlign: columnSettings[0].align,
-                                        }}
-                                      />
-                                    </td>
-                                  )}
+                      <div className="relative mb-8 overflow-hidden w-full">
+                        <div
+                          className={`table-container ${
+                            hasBorder ? "border border-gray-300 rounded-md" : ""
+                          }`}
+                          style={{
+                            position: "relative",
+                            left: `${tablePosition.x}px`,
+                            top: `${tablePosition.y}px`,
+                            width: `${tableSize.width}%`,
+                            height:
+                              tableSize.height === "auto"
+                                ? "auto"
+                                : `${tableSize.height}px`,
+                          }}
+                        >
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-sm md:text-base ">
+                              {headerVisible && (
+                                <thead>
+                                  <tr
+                                    style={{ backgroundColor: backgroundColor }}
+                                  >
+                                    {columnSettings
+                                      .filter((col) => col.visible)
+                                      .map((column) => (
+                                        <th
+                                          key={column.id}
+                                          className={`p-3 ${fontbold}`}
+                                          style={{
+                                            color: fontColor,
+                                            textAlign: column.align,
+                                          }}
+                                        >
+                                          {column.name}
+                                        </th>
+                                      ))}
+                                  </tr>
+                                </thead>
+                              )}
+                              <tbody>
+                                {invoiceData.items.map((item) => (
+                                  <tr
+                                    key={item.id}
+                                    className={hasBorder ? "border-t" : ""}
+                                    style={
+                                      item.id % 2 === 0 && tableStyles.zebra
+                                        ? {
+                                            backgroundColor:
+                                              tableStyles.rowColor,
+                                          }
+                                        : {}
+                                    }
+                                  >
+                                    {columnSettings[0] &&
+                                      columnSettings[0].visible && (
+                                        <td
+                                          className={`p-${tableStyles.padding}`}
+                                          style={{
+                                            textAlign: columnSettings[0].align,
+                                          }}
+                                        >
+                                          <input
+                                            type="text"
+                                            value={item.name}
+                                            onChange={(e) =>
+                                              updateItem(
+                                                item.id,
+                                                "name",
+                                                e.target.value
+                                              )
+                                            }
+                                            className="font-medium mb-1 w-full border-none focus:outline-none"
+                                            style={{
+                                              textAlign:
+                                                columnSettings[0].align,
+                                            }}
+                                          />
+                                          <input
+                                            type="text"
+                                            value={item.description}
+                                            onChange={(e) =>
+                                              updateItem(
+                                                item.id,
+                                                "description",
+                                                e.target.value
+                                              )
+                                            }
+                                            className="text-sm text-gray-600 w-full border-none focus:outline-none"
+                                            style={{
+                                              textAlign:
+                                                columnSettings[0].align,
+                                            }}
+                                          />
+                                        </td>
+                                      )}
 
-                                {columnSettings[1] &&
-                                  columnSettings[1].visible && (
-                                    <td
-                                      className={`p-${tableStyles.padding}`}
-                                      style={{
-                                        textAlign: columnSettings[1].align,
-                                      }}
-                                    >
-                                      <input
-                                        type="number"
-                                        value={item.unitPrice}
-                                        onChange={(e) =>
-                                          updateItem(
-                                            item.id,
-                                            "unitPrice",
-                                            parseFloat(e.target.value) || 0
-                                          )
-                                        }
-                                        className="w-full border-none focus:outline-none"
-                                        style={{
-                                          textAlign: columnSettings[1].align,
-                                        }}
-                                      />
-                                    </td>
-                                  )}
+                                    {columnSettings[1] &&
+                                      columnSettings[1].visible && (
+                                        <td
+                                          className={`p-${tableStyles.padding}`}
+                                          style={{
+                                            textAlign: columnSettings[1].align,
+                                          }}
+                                        >
+                                          <input
+                                            type="number"
+                                            value={item.unitPrice}
+                                            onChange={(e) =>
+                                              updateItem(
+                                                item.id,
+                                                "unitPrice",
+                                                parseFloat(e.target.value) || 0
+                                              )
+                                            }
+                                            className="w-full border-none focus:outline-none"
+                                            style={{
+                                              textAlign:
+                                                columnSettings[1].align,
+                                            }}
+                                          />
+                                        </td>
+                                      )}
 
-                                {columnSettings[2] &&
-                                  columnSettings[2].visible && (
-                                    <td
-                                      className={`p-${tableStyles.padding}`}
-                                      style={{
-                                        textAlign: columnSettings[2].align,
-                                      }}
-                                    >
-                                      <input
-                                        type="number"
-                                        value={item.qty}
-                                        onChange={(e) =>
-                                          updateItem(
-                                            item.id,
-                                            "qty",
-                                            parseInt(e.target.value) || 0
-                                          )
-                                        }
-                                        className="w-20 border-none focus:outline-none"
-                                        style={{
-                                          textAlign: columnSettings[2].align,
-                                        }}
-                                      />
-                                    </td>
-                                  )}
+                                    {columnSettings[2] &&
+                                      columnSettings[2].visible && (
+                                        <td
+                                          className={`p-${tableStyles.padding}`}
+                                          style={{
+                                            textAlign: columnSettings[2].align,
+                                          }}
+                                        >
+                                          <input
+                                            type="number"
+                                            value={item.qty}
+                                            onChange={(e) =>
+                                              updateItem(
+                                                item.id,
+                                                "qty",
+                                                parseInt(e.target.value) || 0
+                                              )
+                                            }
+                                            className="w-20 border-none focus:outline-none"
+                                            style={{
+                                              textAlign:
+                                                columnSettings[2].align,
+                                            }}
+                                          />
+                                        </td>
+                                      )}
 
-                                {columnSettings[3] &&
-                                  columnSettings[3].visible && (
-                                    <td
-                                      className={`p-${tableStyles.padding} font-medium`}
-                                      style={{
-                                        textAlign: columnSettings[3].align,
-                                      }}
-                                    >
-                                      {formatCurrency(item.total)}
-                                    </td>
-                                  )}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                                    {columnSettings[3] &&
+                                      columnSettings[3].visible && (
+                                        <td
+                                          className={`p-${tableStyles.padding} font-medium`}
+                                          style={{
+                                            textAlign: columnSettings[3].align,
+                                          }}
+                                        >
+                                          {formatCurrency(item.total)}
+                                        </td>
+                                      )}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="flex flex-col md:flex-row mb-4 md:mb-8">
